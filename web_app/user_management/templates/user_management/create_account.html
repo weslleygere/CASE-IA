@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #a5d6a7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .login-link a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+      <h2>Create Account</h2>
+  
+      <form method="post" action="{% url 'user_management:create_account' %}">
+        {% csrf_token %}
+        
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        <span class="error-message">{{ form.username.errors }}</span>
+  
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        <span class="error-message">{{ form.email.errors }}</span>
+  
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        <span class="error-message">{{ form.password.errors }}</span>
+  
+        {{ form.password_confirmation.label_tag }}
+        {{ form.password_confirmation }}
+        <span class="error-message">{{ form.password_confirmation.errors }}</span>
+  
+        <button type="submit">Criar Conta</button>
+  
+        <div class="login-link">
+          <p>Já tem uma conta? <a href="{% url 'user_authentication:user_login' %}"> Entrar</a></p>
+        </div>
+      </form>
+    </div>
+  
+  </body>
+</html>

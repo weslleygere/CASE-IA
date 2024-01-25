@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #a5d6a7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .create-account-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .create-account-link a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>User Login</h2>
+
+        <form method="post" action="{% url 'user_authentication:user_login' %}">
+            {% csrf_token %}
+
+            {{ form.username_or_email.label_tag }}
+            {{ form.username_or_email }}
+            <span class="error-message">{{ form.username_or_email.errors }}</span>
+
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            <span class="error-message">{{ form.password.errors }}</span>
+
+            <button type="submit">Entrar</button>
+            
+        </form>
+
+        <div class="create-account-link">
+            <p>Não tem uma conta? <a href="{% url 'user_management:create_account' %}">Criar Conta</a></p>
+        </div>
+
+    </div>
+
+</body>
+</html>

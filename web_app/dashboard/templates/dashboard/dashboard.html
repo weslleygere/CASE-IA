@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h3 {
+            color: #333333;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 90%;
+            height: 90%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #cccccc;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h2> Bem Vindo, {{user.username|title}}!</h2>
+
+    <h3> Escolha um arquivo para visualizar a predição do volume de vendas de cada categoria: </h3>
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'dashboard:file_upload' %}">
+        {% csrf_token %}
+        <input type="file" name="file" id="file-input" accept=".xlsx, .xls" required>
+        <button type="submit">Upload File</button>
+    </form>
+
+    <div class="button-container">
+        <form method="post" action="{% url 'user_authentication:user_logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+        <form method="get" action="{% url 'user_management:edit_account' user.pk %}">
+            {% csrf_token %}
+            <button type="submit">Edit Account</button>
+        </form>
+
+        <form method="get" action="{% url 'user_management:delete_account' user.pk %}">
+            {% csrf_token %}
+            <button type="submit">Delete Account</button>
+        </form>
+    </div>
+
+    {% if data %}
+        <h3>Original Data (Only the first 5 rows):</h3>
+        <table>
+            {{ data|safe }}
+        </table>
+    {% endif %}
+    
+    {% if preprocess_data %}
+        <h3>Processed Data (Only the first 5 rows):</h3>
+        <table>
+            {{ preprocess_data|safe }}
+        </table>
+    {% endif %}
+
+    {% if prediction_tech %}
+        <h3>Prediction for Category - Technology:</h3>
+        <table>
+            {{ prediction_tech|safe }}
+        </table>
+    {% endif %}
+
+    {% if prediction_furn %}
+        <h3>Prediction for Category - Furniture:</h3>
+        <table>
+            {{ prediction_furn|safe }}
+        </table>
+    {% endif %}
+
+    {% if prediction_office %}
+        <h3>Prediction for Category - Office Supplies:</h3>
+        <table>
+            {{ prediction_office|safe }}
+        </table>
+    {% endif %}
+    
+
+</body>
+</html>
